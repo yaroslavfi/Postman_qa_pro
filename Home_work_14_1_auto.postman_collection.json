@@ -1,0 +1,1126 @@
+{
+	"info": {
+		"_postman_id": "473159e0-c30a-4458-b1c1-597cac389afb",
+		"name": "Hillel_auto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23412035",
+		"_collection_link": "https://tst777-5740.postman.co/workspace/Hillel~6250bd32-68b9-4c60-a455-fd56ea5f7081/collection/23412035-473159e0-c30a-4458-b1c1-597cac389afb?action=share&source=collection_link&creator=23412035"
+	},
+	"item": [
+		{
+			"name": "Homework 14.1",
+			"item": [
+				{
+					"name": "Test profile (Not authenticated)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"new_first_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
+									"",
+									"pm.collectionVariables.set(\"new_last_name\", pm.variables.replaceIn(\"{{$randomLastName}}\"));",
+									"",
+									"pm.collectionVariables.set(\"new_date_birth\", pm.variables.replaceIn(\"{{$isoTimestamp}}\"))",
+									"",
+									"pm.collectionVariables.set(\"new_country\", pm.variables.replaceIn(\"{{$randomCountry}}\"));",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Removed unnecessary semicolon",
+									"if (pm.response.code !== 401){",
+									"    console.log(pm.response.status);",
+									"    console.log(\"Test stopped\");",
+									"    pm.execution.setNextRequest(null);",
+									"}",
+									"",
+									"pm.test(\"Response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      status: { type: \"string\" },",
+									"      message: { type: \"string\"},",
+									"    },",
+									"    required: [\"status\", \"message\"]",
+									"  };",
+									"",
+									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"let resBody = pm.response.json();",
+									"",
+									"pm.test(\"Status error\", function () {",
+									"    pm.expect(resBody.status).to.eql(\"error\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/users/profile",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test profile (Not authenticated)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"new_first_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
+									"",
+									"pm.collectionVariables.set(\"new_last_name\", pm.variables.replaceIn(\"{{$randomLastName}}\"));",
+									"",
+									"pm.collectionVariables.set(\"new_date_birth\", pm.variables.replaceIn(\"{{$isoTimestamp}}\"))",
+									"",
+									"pm.collectionVariables.set(\"new_country\", pm.variables.replaceIn(\"{{$randomCountry}}\"));",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Removed unnecessary semicolon",
+									"if (pm.response.code !== 401){",
+									"    console.log(pm.response.status);",
+									"    console.log(\"Test stopped\");",
+									"    pm.execution.setNextRequest(null);",
+									"}",
+									"",
+									"pm.test(\"Response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      status: { type: \"string\" },",
+									"      message: { type: \"string\"},",
+									"    },",
+									"    required: [\"status\", \"message\"]",
+									"  };",
+									"",
+									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"let resBody = pm.response.json();",
+									"",
+									"pm.test(\"Status error\", function () {",
+									"    pm.expect(resBody.status).to.eql(\"error\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"ok\",\n  \"data\": {\n    \"userId\": 33,\n    \"photoFilename\": \"user-1621352948859.jpg\",\n    \"name\": \"John\",\n    \"lastName\": \"Dou\",\n    \"dateBirth\": \"2021-03-17T15:21:05.000Z\",\n    \"country\": \"Ukraine\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/users/profile",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"if (pm.response.code !== 201){",
+									"    console.log(pm.response.status);",
+									"    console.log(\"Test stopped\");",
+									"    pm.execution.setNextRequest(null)",
+									"}",
+									"",
+									"pm.test(\"Response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      status: { type: \"string\" },",
+									"      data: {",
+									"        type: \"object\",",
+									"        properties: {",
+									"          userId: { type: \"number\" },",
+									"          photoFilename: { type: \"string\" },",
+									"          distanceUnits: { type: \"string\" },",
+									"          currency: { type: \"string\" }",
+									"        },",
+									"        required: [\"userId\", \"photoFilename\", \"distanceUnits\", \"currency\"]",
+									"      }",
+									"    },",
+									"    required: [\"status\", \"data\"]",
+									"  };",
+									"",
+									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Generated email is valid\", function () {",
+									"    let reqBody = JSON.parse(pm.request.body.raw);",
+									"    pm.expect(reqBody.email).to.be.a('string').and.to.match(/^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$/);",
+									"    console.log(reqBody.email)",
+									"});",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"let resBody = pm.response.json();",
+									"",
+									"pm.test(\"Status ok\", function () {",
+									"    pm.expect(resBody.status).to.eql(\"ok\");",
+									"});",
+									"",
+									"pm.test(\"User ID is present\", function () {",
+									"    pm.expect(resBody.data.userId).to.exist;",
+									"});",
+									"",
+									"pm.test(\"Photo filename is default\", function () {",
+									"    pm.expect(resBody.data.photoFilename).to.eql(\"default-user.png\");",
+									"});",
+									"",
+									"pm.test(\"Distance units is km\", function () {",
+									"    pm.expect(resBody.data.distanceUnits).to.eql(\"km\");",
+									"});",
+									"",
+									"pm.test(\"Currency is USD\", function () {",
+									"    pm.expect(resBody.data.currency).to.eql(\"usd\");",
+									"});",
+									"",
+									"pm.collectionVariables.set(\"userId\", resBody.data.userId)",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"first_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
+									"pm.collectionVariables.set(\"last_name\", pm.variables.replaceIn(\"{{$randomLastName}}\"));",
+									"pm.collectionVariables.set(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"));",
+									"pm.collectionVariables.set(\"first_password\", pm.variables.replaceIn(\"{{$randomPassword}}\"));",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{first_name}}\",\n  \"lastName\": \"{{last_name}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{first_password}}\",\n  \"repeatPassword\": \"{{first_password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/auth/signup",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						},
+						"description": "Generated from cURL: curl -X 'POST' \\\n  'https://qauto2.forstudy.space/api/auth/signup' \\\n  -H 'accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n  \"name\": \"John\",\n  \"lastName\": \"Dou\",\n  \"email\": \"test@test.com\",\n  \"password\": \"Qwerty12345\",\n  \"repeatPassword\": \"Qwerty12345\"\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "first signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"if (pm.response.code !== 200){",
+									"    console.log(pm.response.status);",
+									"    console.log(\"Test stopped\");",
+									"    pm.execution.setNextRequest(null)",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"let resBody = pm.response.json();",
+									"",
+									"pm.test(\"Status ok\", function () {",
+									"    pm.expect(resBody.status).to.eql(\"ok\");",
+									"});",
+									"",
+									"pm.test(\"User ID is the same\", function () {",
+									"    pm.expect(resBody.data.userId).to.eql(pm.collectionVariables.get(\"userId\"));",
+									"});",
+									"",
+									"pm.test(\"Photo filename is default\", function () {",
+									"    pm.expect(resBody.data.photoFilename).to.eql(\"default-user.png\");",
+									"});",
+									"",
+									"pm.test(\"Distance units is km\", function () {",
+									"    pm.expect(resBody.data.distanceUnits).to.eql(\"km\");",
+									"});",
+									"",
+									"pm.test(\"Currency is USD\", function () {",
+									"    pm.expect(resBody.data.currency).to.eql(\"usd\");",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{first_password}}\",\n  \"remember\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/auth/signin",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test profile (empty userId)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"new_first_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
+									"",
+									"pm.collectionVariables.set(\"new_last_name\", pm.variables.replaceIn(\"{{$randomLastName}}\"));",
+									"",
+									"pm.collectionVariables.set(\"new_date_birth\", pm.variables.replaceIn(\"{{$isoTimestamp}}\"))",
+									"",
+									"pm.collectionVariables.set(\"new_country\", pm.variables.replaceIn(\"{{$randomCountry}}\"));",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Removed unnecessary semicolon",
+									"if (pm.response.code !== 400){",
+									"    console.log(pm.response.status);",
+									"    console.log(\"Test stopped\");",
+									"    pm.execution.setNextRequest(null);",
+									"}",
+									"",
+									"pm.test(\"Response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      status: { type: \"string\" },",
+									"      message: { type: \"string\"},",
+									"    },",
+									"    required: [\"status\", \"message\"]",
+									"  };",
+									"",
+									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"let resBody = pm.response.json();",
+									"",
+									"pm.test(\"Status error\", function () {",
+									"    pm.expect(resBody.status).to.eql(\"error\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"ok\",\n  \"data\": {\n    \"userId\": \"\",\n    \"photoFilename\": \"user-1621352948859.jpg\",\n    \"name\": \"John\",\n    \"lastName\": \"Dou\",\n    \"dateBirth\": \"2021-03-17T15:21:05.000Z\",\n    \"country\": \"Ukraine\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/users/profile",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile edit",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"new_first_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
+									"",
+									"pm.collectionVariables.set(\"new_last_name\", pm.variables.replaceIn(\"{{$randomLastName}}\"));",
+									"",
+									"pm.collectionVariables.set(\"new_date_birth\", pm.variables.replaceIn(\"{{$isoTimestamp}}\"))",
+									"",
+									"pm.collectionVariables.set(\"new_country\", pm.variables.replaceIn(\"{{$randomCountry}}\"));",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"if (pm.response.code !== 200){",
+									"    console.log(pm.response.status);",
+									"    console.log(\"Test stopped\");",
+									"    pm.execution.setNextRequest(null)",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"let resBody = pm.response.json();",
+									"",
+									"pm.test(\"Status ok\", function () {",
+									"    pm.expect(resBody.status).to.eql(\"ok\");",
+									"});",
+									"",
+									"pm.test(\"User ID is the same\", function () {",
+									"    pm.expect(resBody.data.userId).to.eql(pm.collectionVariables.get(\"userId\"));",
+									"});",
+									"",
+									"pm.test(\"Photo filename is not default\", function () {",
+									"    pm.expect(resBody.data.photoFilename).to.not.eql(\"default-user.png\");",
+									"});",
+									"",
+									"pm.test(\"name has been changed correctly\", function () {",
+									"    pm.expect(resBody.data.name).to.eql(pm.collectionVariables.get(\"new_first_name\"));",
+									"});",
+									"",
+									"pm.test(\"lastName has been changed correctly\", function () {",
+									"    pm.expect(resBody.data.lastName).to.eql(pm.collectionVariables.get(\"new_last_name\"));",
+									"});",
+									"",
+									"pm.test(\"new dateBirth is valid\", function () {",
+									"    pm.expect(resBody.data.dateBirth).to.be.a('string').and.to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/)",
+									"});",
+									"",
+									"//let dateBirth_in_req = pm.collectionVariables.get(\"new_date_birth\").slice(0, 19)",
+									"//let dateBirth_in_res = resBody.data.dateBirth.slice(0, 19)",
+									"//console.log(dateBirth_in_req)",
+									"//console.log(dateBirth_in_res)",
+									"pm.test(\"dateBirth has been changed correctly\", function () {",
+									"    pm.expect(resBody.data.dateBirth.slice(0, 19)).to.eql(pm.collectionVariables.get(\"new_date_birth\").slice(0, 19));",
+									"});",
+									"",
+									"pm.test(\"Country has been changed correctly\", function () {",
+									"    pm.expect(resBody.data.country).to.eql(pm.collectionVariables.get(\"new_country\"));",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"photo\": \"user-1621352948859.jpg\",\n  \"name\": \"{{new_first_name}}\",\n  \"lastName\": \"{{new_last_name}}\",\n  \"dateBirth\": \"{{new_date_birth}}\",\n  \"country\": \"{{new_country}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/users/profile",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "password change",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"new_password\", pm.variables.replaceIn(\"{{$randomPassword}}\"));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"if (pm.response.code !== 200){",
+									"    console.log(pm.response.status);",
+									"    console.log(\"Test stopped\");",
+									"    pm.execution.setNextRequest(null)",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"let resBody = pm.response.json();",
+									"",
+									"pm.test(\"Status ok\", function () {",
+									"    pm.expect(resBody.status).to.eql(\"ok\");",
+									"});",
+									"",
+									"pm.test(\"User ID is the same\", function () {",
+									"    pm.expect(resBody.data.userId).to.eql(pm.collectionVariables.get(\"userId\"));",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"oldPassword\": \"{{first_password}}\",\n  \"password\": \"{{new_password}}\",\n  \"repeatPassword\": \"{{new_password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/users/password",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"users",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"if (pm.response.code !== 200){",
+									"    console.log(pm.response.status);",
+									"    console.log(\"Test stopped\");",
+									"    pm.execution.setNextRequest(null)",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"let resBody = pm.response.json();",
+									"",
+									"pm.test(\"Status ok\", function () {",
+									"    pm.expect(resBody.status).to.eql(\"ok\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/auth/logout",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "second signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"if (pm.response.code !== 200){",
+									"    console.log(pm.response.status);",
+									"    console.log(\"Test stopped\");",
+									"    pm.execution.setNextRequest(null)",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"let resBody = pm.response.json();",
+									"",
+									"pm.test(\"Status ok\", function () {",
+									"    pm.expect(resBody.status).to.eql(\"ok\");",
+									"});",
+									"",
+									"pm.test(\"User ID is the same\", function () {",
+									"    pm.expect(resBody.data.userId).to.eql(pm.collectionVariables.get(\"userId\"));",
+									"});",
+									"",
+									"pm.test(\"Photo filename is not default\", function () {",
+									"    pm.expect(resBody.data.photoFilename).to.not.eql(\"default-user.png\");",
+									"});",
+									"",
+									"pm.test(\"Distance units is km\", function () {",
+									"    pm.expect(resBody.data.distanceUnits).to.eql(\"km\");",
+									"});",
+									"",
+									"pm.test(\"Currency is USD\", function () {",
+									"    pm.expect(resBody.data.currency).to.eql(\"usd\");",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{new_password}}\",\n  \"remember\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/auth/signin",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new car",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"if (pm.response.code !== 201){",
+									"    console.log(pm.response.status);",
+									"    console.log(\"Test stopped\");",
+									"    pm.execution.setNextRequest(null)",
+									"}",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"let resBody = pm.response.json();",
+									"",
+									"pm.collectionVariables.set(\"carID\", resBody.data.id);",
+									"",
+									"pm.test(\"Status ok\", function () {",
+									"    pm.expect(resBody.status).to.eql(\"ok\");",
+									"});",
+									"",
+									"pm.test(\"CarId is present\", function () {",
+									"    pm.expect(resBody.data.id).to.exist;",
+									"});",
+									"",
+									"pm.test(\"carBrandId is present\", function () {",
+									"    pm.expect(resBody.data.carBrandId).to.exist;",
+									"});",
+									"pm.test(\"carModelId is present\", function () {",
+									"    pm.expect(resBody.data.carModelId).to.exist;",
+									"});",
+									"pm.test(\"initialMileage is present\", function () {",
+									"    pm.expect(resBody.data.initialMileage).to.exist;",
+									"});",
+									"pm.test(\"updatedMileageAt is present\", function () {",
+									"    pm.expect(resBody.data.updatedMileageAt).to.exist;",
+									"});",
+									"pm.test(\"carCreatedAt is present\", function () {",
+									"    pm.expect(resBody.data.carCreatedAt).to.exist;",
+									"});",
+									"pm.test(\"mileage is present\", function () {",
+									"    pm.expect(resBody.data.mileage).to.exist;",
+									"});",
+									"pm.test(\"brand is present\", function () {",
+									"    pm.expect(resBody.data.brand).to.exist;",
+									"});",
+									"pm.test(\"model is present\", function () {",
+									"    pm.expect(resBody.data.model).to.exist;",
+									"});",
+									"pm.test(\"CarId is present\", function () {",
+									"    pm.expect(resBody.data.logo).to.exist;",
+									"});",
+									"",
+									"pm.collectionVariables.set(\"current_mileage\", resBody.data.mileage)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"carBrandId\": 1,\n  \"carModelId\": 1,\n  \"mileage\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/cars",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add expenses",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set(\"current_mileage_plus_one\", pm.collectionVariables.get(\"current_mileage\") + 1);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code !== 200){",
+									"    console.log(pm.response.status);",
+									"    console.log(\"Test stopped\");",
+									"    pm.execution.setNextRequest(null)",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"let resBody = pm.response.json();",
+									"",
+									"pm.test(\"Status ok\", function () {",
+									"    pm.expect(resBody.status).to.eql(\"ok\");",
+									"});",
+									"",
+									"pm.test(\"CarId is the same\", function () {",
+									"    pm.expect(resBody.data.carId).to.eql(pm.collectionVariables.get(\"carID\"));",
+									"});",
+									"",
+									"pm.collectionVariables.set(\"current_mileage\", pm.collectionVariables.get(\"current_mileage_plus_one\"));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"carId\": {{carID}},\n  \"reportedAt\": \"{{$isoTimestamp}}\",\n  \"mileage\": {{current_mileage_plus_one}},\n  \"liters\": 1,\n  \"totalCost\": 1,\n  \"forceMileage\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/expenses",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"expenses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"if (pm.response.code !== 200){",
+									"    console.log(pm.response.status);",
+									"    console.log(\"Test stopped\");",
+									"    pm.execution.setNextRequest(null)",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Status ok\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.status).to.eql(\"ok\");",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Status is ok\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.status).to.eql(\"ok\");",
+									"});",
+									"",
+									"",
+									"pm.collectionVariables.unset(\"email\")",
+									"pm.collectionVariables.unset(\"first_name\")",
+									"pm.collectionVariables.unset(\"last_name\")",
+									"pm.collectionVariables.unset(\"new_first_name\")",
+									"pm.collectionVariables.unset(\"new_last_name\")",
+									"pm.collectionVariables.unset(\"new_country\")",
+									"pm.collectionVariables.unset(\"new_password\")",
+									"pm.collectionVariables.unset(\"carID\")",
+									"pm.collectionVariables.unset(\"first_password\")",
+									"pm.collectionVariables.unset(\"userId\")",
+									"pm.collectionVariables.unset(\"new_date_birth\")",
+									"pm.collectionVariables.unset(\"current_mileage\")",
+									"pm.collectionVariables.unset(\"current_mileage_plus_one\")"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/users",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
