@@ -8,199 +8,450 @@
 	},
 	"item": [
 		{
-			"name": "Homework 14.1",
+			"name": "Homework 15.1 external file",
 			"item": [
 				{
-					"name": "Test profile (Not authenticated)",
-					"event": [
+					"name": "Negative signup tests external file",
+					"item": [
 						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"pm.collectionVariables.set(\"new_first_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
-									"",
-									"pm.collectionVariables.set(\"new_last_name\", pm.variables.replaceIn(\"{{$randomLastName}}\"));",
-									"",
-									"pm.collectionVariables.set(\"new_date_birth\", pm.variables.replaceIn(\"{{$isoTimestamp}}\"))",
-									"",
-									"pm.collectionVariables.set(\"new_country\", pm.variables.replaceIn(\"{{$randomCountry}}\"));",
-									"",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"// Removed unnecessary semicolon",
-									"if (pm.response.code !== 401){",
-									"    console.log(pm.response.status);",
-									"    console.log(\"Test stopped\");",
-									"    pm.execution.setNextRequest(null);",
-									"}",
-									"",
-									"pm.test(\"Response schema is valid\", function () {",
-									"  var schema = {",
-									"    type: \"object\",",
-									"    properties: {",
-									"      status: { type: \"string\" },",
-									"      message: { type: \"string\"},",
-									"    },",
-									"    required: [\"status\", \"message\"]",
-									"  };",
-									"",
-									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
-									"});",
-									"",
-									"pm.test(\"Status code is 401\", function () {",
-									"    pm.response.to.have.status(401);",
-									"});",
-									"",
-									"pm.test(\"Response time is less than 1500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
-									"});",
-									"",
-									"pm.test(\"Content-Type is present\", function () {",
-									"    pm.response.to.have.header(\"Content-Type\");",
-									"});",
-									"",
-									"let resBody = pm.response.json();",
-									"",
-									"pm.test(\"Status error\", function () {",
-									"    pm.expect(resBody.status).to.eql(\"error\");",
-									"});",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+							"name": "signup",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 1000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"Status in body is error\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.status).to.eql(\"error\");",
+											"});",
+											"",
+											"pm.test(\"Content-Type is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"});",
+											"",
+											"if (pm.response.code === 400){",
+											"    pm.execution.setNextRequest(null)",
+											"}",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"",
+											"",
+											"console.log(pm.info.iteration)",
+											"if (pm.info.iteration >= 6){",
+											"    pm.execution.skipRequest()",
+											"}",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "{{domain}}/users/profile",
-							"host": [
-								"{{domain}}"
 							],
-							"path": [
-								"users",
-								"profile"
-							]
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{first_name}}\",\n  \"lastName\": \"{{last_name}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"repeatPassword\": \"{{password}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{domain}}/auth/signup",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Test profile (Not authenticated)",
-					"event": [
+					"name": "Negative profile tests external file",
+					"item": [
 						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"pm.collectionVariables.set(\"new_first_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
-									"",
-									"pm.collectionVariables.set(\"new_last_name\", pm.variables.replaceIn(\"{{$randomLastName}}\"));",
-									"",
-									"pm.collectionVariables.set(\"new_date_birth\", pm.variables.replaceIn(\"{{$isoTimestamp}}\"))",
-									"",
-									"pm.collectionVariables.set(\"new_country\", pm.variables.replaceIn(\"{{$randomCountry}}\"));",
-									"",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"// Removed unnecessary semicolon",
-									"if (pm.response.code !== 401){",
-									"    console.log(pm.response.status);",
-									"    console.log(\"Test stopped\");",
-									"    pm.execution.setNextRequest(null);",
-									"}",
-									"",
-									"pm.test(\"Response schema is valid\", function () {",
-									"  var schema = {",
-									"    type: \"object\",",
-									"    properties: {",
-									"      status: { type: \"string\" },",
-									"      message: { type: \"string\"},",
-									"    },",
-									"    required: [\"status\", \"message\"]",
-									"  };",
-									"",
-									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
-									"});",
-									"",
-									"pm.test(\"Status code is 401\", function () {",
-									"    pm.response.to.have.status(401);",
-									"});",
-									"",
-									"pm.test(\"Response time is less than 1500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
-									"});",
-									"",
-									"pm.test(\"Content-Type is present\", function () {",
-									"    pm.response.to.have.header(\"Content-Type\");",
-									"});",
-									"",
-									"let resBody = pm.response.json();",
-									"",
-									"pm.test(\"Status error\", function () {",
-									"    pm.expect(resBody.status).to.eql(\"error\");",
-									"});",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"status\": \"ok\",\n  \"data\": {\n    \"userId\": 33,\n    \"photoFilename\": \"user-1621352948859.jpg\",\n    \"name\": \"John\",\n    \"lastName\": \"Dou\",\n    \"dateBirth\": \"2021-03-17T15:21:05.000Z\",\n    \"country\": \"Ukraine\"\n  }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"name": "user status",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"",
+											"if (pm.response.code === 401 && (pm.info.iteration === 6 || pm.info.iteration === 10)){",
+											"    pm.execution.setNextRequest(\"positive signup\");",
+											"} else if (pm.response.code === 200 && (pm.info.iteration === 6 || pm.info.iteration === 10)){",
+											"    pm.execution.setNextRequest(\"logout\")",
+											"} else {",
+											"    pm.execution.setNextRequest(\"test profile\");",
+											"}",
+											"",
+											"pm.test(\"Response time is less than 1500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+											"});",
+											"",
+											"pm.test(\"Content-Type is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"});",
+											"",
+											"let resBody = pm.response.json();",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "{{domain}}/users/profile",
-							"host": [
-								"{{domain}}"
 							],
-							"path": [
-								"users",
-								"profile"
-							]
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{domain}}/users/current",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"users",
+										"current"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.execution.setNextRequest(\"user status\")"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/auth/logout",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "positive signup",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.info.iteration === 6 || pm.info.iteration === 10){",
+											"    pm.execution.setNextRequest(\"signin\")",
+											"} ",
+											"",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 1000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"Status in body is ok\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.status).to.eql(\"ok\");",
+											"});",
+											"",
+											"pm.test(\"Content-Type is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{first_name}}\",\n  \"lastName\": \"{{last_name}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"repeatPassword\": \"{{password}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{domain}}/auth/signup",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "signin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.execution.setNextRequest(null)",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 1000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"Status in body is ok\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.status).to.eql(\"ok\");",
+											"});",
+											"",
+											"pm.test(\"Content-Type is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"remember\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{domain}}/auth/signin",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "test profile",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.info.iteration === 9 || pm.info.iteration === 13){",
+											"    pm.execution.setNextRequest(\"delete user\")",
+											"} else {",
+											"    pm.execution.setNextRequest(null)",
+											"}",
+											"",
+											"let resBody = pm.response.text(); // Change pm.response.json() to pm.response.text()",
+											"",
+											"pm.test(\"Response schema is valid\", function () {",
+											"  var schema = {",
+											"    type: \"object\",",
+											"    properties: {",
+											"      status: { type: \"string\" },",
+											"      message: { type: \"string\"},",
+											"    },",
+											"    required: [\"status\", \"message\"]",
+											"  };",
+											"",
+											"  pm.expect(tv4.validate(JSON.parse(resBody), schema)).to.be.true; // Parse the response body as JSON",
+											"});",
+											"",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 1500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+											"});",
+											"",
+											"pm.test(\"Content-Type is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"});",
+											"",
+											"pm.test(\"Status error\", function () {",
+											"    pm.expect(JSON.parse(resBody).status).to.eql(\"error\"); ",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"photoFilename\": \"user-1621352948859.jpg\",\n    \"name\": \"{{first_name}}\",\n    \"lastName\": \"{{last_name}}\",\n    \"dateBirth\": \"2021-03-17T15:21:05.000Z\",\n    \"country\": \"{{country}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{domain}}/users/profile",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"users",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete user",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/users",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
-				},
+					]
+				}
+			]
+		},
+		{
+			"name": "Smoke test local run",
+			"item": [
 				{
 					"name": "signup",
 					"event": [
@@ -415,100 +666,6 @@
 							"path": [
 								"auth",
 								"signin"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Test profile (empty userId)",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"pm.collectionVariables.set(\"new_first_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\"));",
-									"",
-									"pm.collectionVariables.set(\"new_last_name\", pm.variables.replaceIn(\"{{$randomLastName}}\"));",
-									"",
-									"pm.collectionVariables.set(\"new_date_birth\", pm.variables.replaceIn(\"{{$isoTimestamp}}\"))",
-									"",
-									"pm.collectionVariables.set(\"new_country\", pm.variables.replaceIn(\"{{$randomCountry}}\"));",
-									"",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"// Removed unnecessary semicolon",
-									"if (pm.response.code !== 400){",
-									"    console.log(pm.response.status);",
-									"    console.log(\"Test stopped\");",
-									"    pm.execution.setNextRequest(null);",
-									"}",
-									"",
-									"pm.test(\"Response schema is valid\", function () {",
-									"  var schema = {",
-									"    type: \"object\",",
-									"    properties: {",
-									"      status: { type: \"string\" },",
-									"      message: { type: \"string\"},",
-									"    },",
-									"    required: [\"status\", \"message\"]",
-									"  };",
-									"",
-									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
-									"});",
-									"",
-									"pm.test(\"Status code is 400\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"Response time is less than 1500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
-									"});",
-									"",
-									"pm.test(\"Content-Type is present\", function () {",
-									"    pm.response.to.have.header(\"Content-Type\");",
-									"});",
-									"",
-									"let resBody = pm.response.json();",
-									"",
-									"pm.test(\"Status error\", function () {",
-									"    pm.expect(resBody.status).to.eql(\"error\");",
-									"});",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"status\": \"ok\",\n  \"data\": {\n    \"userId\": \"\",\n    \"photoFilename\": \"user-1621352948859.jpg\",\n    \"name\": \"John\",\n    \"lastName\": \"Dou\",\n    \"dateBirth\": \"2021-03-17T15:21:05.000Z\",\n    \"country\": \"Ukraine\"\n  }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{domain}}/users/profile",
-							"host": [
-								"{{domain}}"
-							],
-							"path": [
-								"users",
-								"profile"
 							]
 						}
 					},
