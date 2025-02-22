@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "79d5be2f-4c2a-4241-802b-03077f297968",
+		"name": "Homework_16_1_GraphQL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23412035",
+		"_collection_link": "https://tst777-5740.postman.co/workspace/Hillel~6250bd32-68b9-4c60-a455-fd56ea5f7081/collection/23412035-79d5be2f-4c2a-4241-802b-03077f297968?action=share&source=collection_link&creator=23412035"
+	},
+	"item": [
+		{
+			"name": "all cities",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const resBody = pm.response.json();",
+							"const cities = resBody.data.getAllCities;",
+							"",
+							"// Вибір 4 випадкових ID",
+							"function getRandomIds(arr, count) {",
+							"  var randomIds = [];",
+							"  while (randomIds.length < count) {",
+							"    var randomIndex = Math.floor(Math.random() * arr.length); // Вибір випадкового індексу",
+							"    if (randomIds.indexOf(arr[randomIndex].id) === -1) { // Перевірка на унікальність",
+							"      randomIds.push(arr[randomIndex].id); // Додавання до масиву",
+							"    }",
+							"  }",
+							"  return randomIds;",
+							"}",
+							"const randomIds = getRandomIds(cities, 4);",
+							"pm.collectionVariables.set(\"randomIds\", JSON.stringify(randomIds));",
+							"",
+							"//Визначення середнього значення всіх площ усіх міст",
+							"const totalArea = cities.reduce((sum, city) => sum + city.square, 0);",
+							"const averageArea = totalArea / cities.length;",
+							"pm.collectionVariables.set(\"totalArea\", totalArea)",
+							"pm.collectionVariables.set(\"averageArea\", averageArea);",
+							"console.log(\"Середня площа усіх міст: \" + averageArea);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Server is nginx\", function () {",
+							"    pm.response.to.be.header(\"Server\", \"nginx\");",
+							"});",
+							"",
+							"pm.test(\"getAllCities is present\", function () {",
+							"    pm.expect(resBody.data.getAllCities).to.exist;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query{\n    getAllCities{\n        id\n        name\n        square\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "description",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.get(\"randomIds\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const resBody = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Server is nginx\", function () {",
+							"    pm.response.to.be.header(\"Server\", \"nginx\");",
+							"});",
+							"",
+							"pm.test(\"getCitiesByIds is present\", function () {",
+							"    pm.expect(resBody.data.getCitiesByIds).to.exist;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query{\n  getCitiesByIds(in: {{randomIds}}){\n    id\n    name\n        ... on City{\n        description\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "by range",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomIds = JSON.parse(pm.collectionVariables.get(\"randomIds\"));",
+							"const minId = Math.min(...randomIds);",
+							"const maxId = Math.max(...randomIds);",
+							"",
+							"pm.collectionVariables.set(\"minId\", minId);",
+							"pm.collectionVariables.set(\"maxId\", maxId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const resBody = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Server is nginx\", function () {",
+							"    pm.response.to.be.header(\"Server\", \"nginx\");",
+							"});",
+							"",
+							"pm.test(\"getCityByRangeId is present\", function () {",
+							"    pm.expect(resBody.data.getCityByRangeId).to.exist;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query($minId: Int! = 1, $maxId: Int! = 25){\n    getCityByRangeId(filter: {minId: $minId, maxId: $maxId}){\n        id\n        name\n        square\n    }\n}",
+						"variables": "{\n    \"minId\":{{minId}},\n    \"maxId\":{{maxId}}\n}"
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new city",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const resBody = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Server is nginx\", function () {",
+							"    pm.response.to.be.header(\"Server\", \"nginx\");",
+							"});",
+							"",
+							"pm.test(\"City id has been generated\", function () {",
+							"    pm.expect(resBody.data.addCity.id).to.exist;",
+							"});",
+							"",
+							"pm.test(\"City name has been added correctly\", function () {",
+							"    pm.expect(resBody.data.addCity.name).to.eql(\"TestCity\");",
+							"});",
+							"",
+							"pm.test(\"City square has been added correctly\", function () {",
+							"    pm.expect(resBody.data.addCity.square).to.eql(pm.collectionVariables.get(\"totalArea\"));",
+							"});",
+							"",
+							"pm.test(\"City description has been added correctly\", function () {",
+							"    pm.expect(resBody.data.addCity.description).to.eql(\"This is the test city!\");",
+							"});",
+							"",
+							"pm.collectionVariables.unset(\"randomIds\")",
+							"pm.collectionVariables.unset(\"totalArea\")",
+							"pm.collectionVariables.unset(\"averageArea\")",
+							"pm.collectionVariables.unset(\"minId\")",
+							"pm.collectionVariables.unset(\"maxId\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.get(\"totalArea\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation{\n    addCity(name: \"TestCity\", square: {{totalArea}}, description: \"This is the test city!\"){\n        id\n        name\n        square\n        ... on City{\n            description\n        }\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
